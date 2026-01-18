@@ -1,4 +1,4 @@
-name: Travel-Planner CI/CD with Gradle
+name: Travel-Planner CI with Gradle
 
 on:
   push:
