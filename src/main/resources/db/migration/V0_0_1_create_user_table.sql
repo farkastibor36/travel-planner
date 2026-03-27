@@ -7,6 +7,6 @@ CREATE TABLE `travel_database`.`users`
     `birth_date` DATE NULL,
     `email`      VARCHAR(100) NULL,
     `password`   VARCHAR(100) NULL,
-    `created_at` TIMESTAMP NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
