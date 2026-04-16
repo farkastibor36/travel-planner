@@ -1,8 +1,12 @@
+import TextField from '@mui/material/TextField';
 import {useState} from "react";
 import "./App.css";
+import MyForm from "./components/MyForm.jsx";
+import MainPage from "./components/MainPage.jsx";
 
 function App() {
     const [isLogin, setIsLogin] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         userName: "",
@@ -43,6 +47,7 @@ function App() {
                 }
 
                 setMessage("Login successful!");
+                setIsLoggedIn(true);
                 return;
             }
 
@@ -80,6 +85,9 @@ function App() {
             setMessage("An error occurred during registration.");
         }
     };
+    if (isLoggedIn) {
+        return <MainPage/>
+    }
 
     return (
         <div className="auth-container">

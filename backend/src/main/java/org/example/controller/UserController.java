@@ -5,6 +5,7 @@ import org.example.dto.LoginRequestDto;
 import org.example.dto.UserCreateDto;
 import org.example.dto.UserDto;
 import org.example.model.User;
+import org.example.service.FlySearchingService;
 import org.example.service.UserCRUDServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
     private final UserCRUDServiceImpl userCRUDService;
+    private final FlySearchingService flySearchingService;
 
     @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody UserCreateDto userCreateDto) {
@@ -45,12 +47,22 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginRequestDto loginRequestDto) {
-        boolean success = userCRUDService.login(loginRequestDto);
+        boolean isLoginValid = userCRUDService.login(loginRequestDto);
 
-        if (success) {
+        if (isLoginValid) {
             return ResponseEntity.ok().build();
         }
 
         return ResponseEntity.status(401).build();
+    }
+
+    @GetMapping("/flights/search")
+    public String searchFlights(@RequestParam String from, @RequestParam String to, @RequestParam String dateFrom, @RequestParam String dateTo) {
+        return flySearchingService.searchFlights(from, to, dateFrom, dateTo, 1, "EUR", 10, 0);
+    }
+
+    @GetMapping("/flights/location")
+    public String getLocation(@RequestParam String city) {
+        return flySearchingService.getLocationCode(city);
     }
 }
